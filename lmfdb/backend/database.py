@@ -314,6 +314,7 @@ class PostgresDatabase(PostgresBase):
         for user in users:
             self._execute(grantor.format(Identifier(table_name), Identifier(user)), silent=True)
 
+    def grant_select(self, table_name, users=["xtjzzixgentrad"]):
         """
         Grant users the ability to run SELECT statements on a given table
 
