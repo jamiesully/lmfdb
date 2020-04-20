@@ -1,6 +1,4 @@
 from .utilities import display_knowl
-from sage.structure.unique_representation import UniqueRepresentation
-
 
 class TdElt(object):
     _wrap_type = 'td'
@@ -498,7 +496,8 @@ class SearchButtonWithSelect(SearchButton):
             + "</td>"
         )
 
-class SearchArray(UniqueRepresentation):
+
+class SearchArray:
     """
     This class is used to represent the grid of inputs in a browse or search array.
     The goal is to be able to use create one object for each input which can then

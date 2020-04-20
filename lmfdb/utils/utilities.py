@@ -21,13 +21,6 @@ from six import PY3
 from flask import make_response, flash, url_for, current_app
 from markupsafe import Markup, escape
 from werkzeug.utils import cached_property
-from sage.all import (CC, CBF, CDF,
-                      Factorization, NumberField,
-                      PolynomialRing, PowerSeriesRing, QQ,
-                      RealField, RR, RIF, TermOrder, ZZ)
-from sage.misc.functional import round
-from sage.all import floor, latex, prime_range, valuation
-from sage.structure.element import Element
 
 from lmfdb.app import app, is_beta, is_debug_mode, _url_source
 
@@ -126,46 +119,6 @@ def key_for_numerically_sort(elt, split=r"[\s\.\-]"):
     key = [try_int(k) for k in re.split(split, elt)]
     return tuple((type_key(k), k) for k in key)
 
-
-def an_list(euler_factor_polynomial_fn,
-            upperbound=100000, base_field=QQ):
-    """
-    Takes a fn that gives for each prime the Euler polynomial of the associated
-    with the prime, given as a list, with independent coefficient first. This
-    list is of length the degree+1.
-    Output the first `upperbound` coefficients built from the Euler polys.
-
-    Example:
-    The `euler_factor_polynomial_fn` should in practice come from an L-function
-    or data. For a simple example, we construct just the 2 and 3 factors of the
-    Riemann zeta function, which have Euler factors (1 - 1*2^(-s))^(-1) and
-    (1 - 1*3^(-s))^(-1).
-    >>> euler = lambda p: [1, -1] if p <= 3 else [1, 0]
-    >>> an_list(euler)[:20]
-    [1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0]
-    """
-    from math import ceil, log
-    PP = PowerSeriesRing(base_field, 'x', 1 + ceil(log(upperbound) / log(2.)))
-
-    prime_l = prime_range(upperbound + 1)
-    result = [1 for i in range(upperbound)]
-    for p in prime_l:
-        euler_factor = (1 / (PP(euler_factor_polynomial_fn(p)))).padded_list()
-        if len(euler_factor) == 1:
-            for j in range(1, 1 + upperbound // p):
-                result[j * p - 1] = 0
-            continue
-
-        k = 1
-        while True:
-            if p ** k > upperbound:
-                break
-            for j in range(1, 1 + upperbound // (p ** k)):
-                if j % p == 0:
-                    continue
-                result[j * p ** k - 1] *= euler_factor[k]
-            k += 1
-    return result
 
 def coeff_to_poly(c, var=None):
     """

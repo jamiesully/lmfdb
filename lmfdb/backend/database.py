@@ -13,8 +13,6 @@ import traceback
 from collections import defaultdict, Counter
 from glob import glob
 
-from sage.all import Integer, RealNumber
-
 from psycopg2 import connect, DatabaseError
 from psycopg2.sql import SQL, Identifier, Placeholder
 from psycopg2.extensions import (
@@ -48,8 +46,6 @@ def setup_connection(conn):
     NUMERICL = new_array_type((oid,), "NUMERIC[]", NUMERIC)
     register_type(NUMERIC, conn)
     register_type(NUMERICL, conn)
-    register_adapter(Integer, AsIs)
-    register_adapter(RealNumber, RealEncoder)
     register_adapter(dict, Json)
     register_json(conn, loads=Json.loads)
 
@@ -318,7 +314,6 @@ class PostgresDatabase(PostgresBase):
         for user in users:
             self._execute(grantor.format(Identifier(table_name), Identifier(user)), silent=True)
 
-    def grant_select(self, table_name, users=["lmfdb", "webserver"]):
         """
         Grant users the ability to run SELECT statements on a given table
 
@@ -329,7 +324,7 @@ class PostgresDatabase(PostgresBase):
         """
         self._grant("SELECT", table_name, users)
 
-    def grant_insert(self, table_name, users=["webserver"]):
+    def grant_insert(self, table_name, users=["xtjzzixgentrad"]):
         """
         Grant users the ability to run INSERT statements on a given table
 
@@ -340,7 +335,7 @@ class PostgresDatabase(PostgresBase):
         """
         self._grant("INSERT", table_name, users)
 
-    def grant_update(self, table_name, users=["webserver"]):
+    def grant_update(self, table_name, users=["xtjzzixgentrad"]):
         """
         Grant users the ability to run UPDATE statements on a given table
 
@@ -351,7 +346,7 @@ class PostgresDatabase(PostgresBase):
         """
         self._grant("UPDATE", table_name, users)
 
-    def grant_delete(self, table_name, users=["webserver"]):
+    def grant_delete(self, table_name, users=["xtjzzixgentrad"]):
         """
         Grant users the ability to run DELETE statements on a given table
 
@@ -680,8 +675,8 @@ SELECT table_name, row_estimate, total_bytes, index_bytes, toast_bytes,
         """
         if name in self.tablenames:
             raise ValueError("%s already exists" % name)
-        if "_" not in name:
-            raise ValueError("Table name must contain an underscore; first part gives LMFDB section")
+        # if "_" not in name:
+        #     raise ValueError("Table name must contain an underscore; first part gives LMFDB section")
         now = time.time()
         if id_ordered is None:
             id_ordered = sort is not None

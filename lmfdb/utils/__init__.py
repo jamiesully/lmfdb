@@ -50,7 +50,7 @@ from flask import (request, make_response, flash, url_for,
 from .utilities import (
     list_to_factored_poly_otherorder,
     list_factored_to_factored_poly_otherorder,
-    key_for_numerically_sort, an_list, coeff_to_poly, coeff_to_power_series,
+    key_for_numerically_sort, coeff_to_poly, coeff_to_power_series,
     display_multiset, pair2complex, round_CBF_to_half_int, str_to_CBF,
     to_dict, display_float, display_complex, round_to_half_int,
     splitcoeff, comma, format_percentage, signtocolour, rgbtohex, pol_to_html,
@@ -66,26 +66,8 @@ from .utilities import (
     KeyedDefaultDict, make_tuple, range_formatter,
     datetime_to_timestamp_in_ms, timestamp_in_ms_to_datetime)
 
-from .search_parsing import (
-    parse_ints, parse_signed_ints, parse_floats, parse_rational, parse_rats,
-    parse_bracketed_posints, parse_bracketed_rats, parse_bool, parse_bool_unknown, parse_primes,
-    parse_element_of, parse_subset, parse_submultiset, parse_list,
-    parse_list_start, parse_string_start, parse_restricted, parse_noop,
-    parse_equality_constraints, parse_gap_id, parse_galgrp, parse_nf_string,
-    parse_nf_elt, parse_container, parse_hmf_weight, parse_count, parse_start,
-    parse_ints_to_list_flash, integer_options, nf_string_to_label, 
-    parse_subfield, SearchParsingError,
-    clean_input, prep_ranges)
 
-from .search_wrapper import search_wrap, count_wrap
-from .search_boxes import (
-    SearchArray, TextBox, TextBoxNoEg, TextBoxWithSelect, BasicSpacer,
-    SkipBox, CheckBox, CheckboxSpacer, DoubleSelectBox, HiddenBox,
-    SelectBox, YesNoBox, YesNoMaybeBox, ExcludeOnlyBox,
-    ParityBox, ParityMod, SubsetBox, SubsetNoExcludeBox, SelectBoxNoEg, CountBox,
-    SearchButton, SearchButtonWithSelect, RowSpacer)
 from .downloader import Downloader
-from .display_stats import formatters, proportioners, totaler, StatsDisplay
 from .config import Configuration
 from .names_and_urls import names_and_urls, name_and_object_from_url
 from .reraise import reraise

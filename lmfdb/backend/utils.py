@@ -4,8 +4,6 @@ import re
 
 from psycopg2.sql import SQL, Identifier, Placeholder
 
-from lmfdb.utils import SearchParsingError
-
 ##################################################################
 # query language                                                 #
 ##################################################################

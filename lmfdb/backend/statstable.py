@@ -7,7 +7,6 @@ from collections import defaultdict
 
 from psycopg2 import DatabaseError
 from psycopg2.sql import SQL, Identifier, Literal
-from sage.all import cartesian_product_iterator, binomial
 
 from lmfdb.utils import KeyedDefaultDict, make_tuple
 
