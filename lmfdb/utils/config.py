@@ -303,26 +303,16 @@ class Configuration(object):
 
         self.color = getint("core", "color")
 
-        try:
-            heroku_database_path = os.environ["DATABASE_URL"]
-        except:
-            heroku_database_path = os.popen("heroku config:get DATABASE_URL -a seminarxiv-development").read()[:-1]
-
-        urllib.parse.uses_netloc.append("postgres")
-        heroku_url = urllib.parse.urlparse(heroku_database_path)
-        heroku_db_name = heroku_url.path[1:]
-        heroku_db_user = heroku_url.username
-        heroku_db_password = heroku_url.password
-        heroku_db_host = heroku_url.hostname
-        heroku_db_port = heroku_url.port
-
         self.postgresql_options = {
-            "port": heroku_db_port,
-            "host": heroku_db_host,
-            "dbname": heroku_db_name,
-            "user": heroku_db_user,
-            "password": heroku_db_password,
+            "port": getint("postgresql", "port"),
+            "host": get("postgresql", "host"),
+            "dbname": get("postgresql", "dbname"),
         }
+
+        # optional items
+        for elt in ["user", "password"]:
+            if _cfgp.has_option("postgresql", elt):
+                self.postgresql_options[elt] = get("postgresql", elt)
 
         self.logging_options = {
             "logfile": get("logging", "logfile"),

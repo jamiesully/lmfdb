@@ -314,7 +314,7 @@ class PostgresDatabase(PostgresBase):
         for user in users:
             self._execute(grantor.format(Identifier(table_name), Identifier(user)), silent=True)
 
-    def grant_select(self, table_name, users=["xtjzzixgentrad"]):
+    def grant_select(self, table_name, users=["webserver"]):
         """
         Grant users the ability to run SELECT statements on a given table
 
@@ -325,7 +325,7 @@ class PostgresDatabase(PostgresBase):
         """
         self._grant("SELECT", table_name, users)
 
-    def grant_insert(self, table_name, users=["xtjzzixgentrad"]):
+    def grant_insert(self, table_name, users=["webserver"]):
         """
         Grant users the ability to run INSERT statements on a given table
 
@@ -336,7 +336,7 @@ class PostgresDatabase(PostgresBase):
         """
         self._grant("INSERT", table_name, users)
 
-    def grant_update(self, table_name, users=["xtjzzixgentrad"]):
+    def grant_update(self, table_name, users=["webserver"]):
         """
         Grant users the ability to run UPDATE statements on a given table
 
@@ -347,7 +347,7 @@ class PostgresDatabase(PostgresBase):
         """
         self._grant("UPDATE", table_name, users)
 
-    def grant_delete(self, table_name, users=["xtjzzixgentrad"]):
+    def grant_delete(self, table_name, users=["webserver"]):
         """
         Grant users the ability to run DELETE statements on a given table
 
